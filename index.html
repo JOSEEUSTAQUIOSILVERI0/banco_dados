@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banco de Dados Relacionais e Não Relacionais</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Banco de Dados Relacionais e Não Relacionais para Aplicações Web</h1>
+            <nav>
+                <ul>
+                    <li><a href="#relacionais">Relacionais</a></li>
+                    <li><a href="#nao-relacionais">Não Relacionais</a></li>
+                    <li><a href="#comparacao">Comparação</a></li>
+                    <li><a href="#conclusao">Conclusão</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>	
+
+    <main>
+        <div class="container">
+            <section id="relacionais">
+                <h2>Bancos de Dados Relacionais</h2>
+                <img src="images/sqlok.png" alt="Banco de Dados Relacional" class="section-img">
+                <p>Bancos de dados relacionais organizam dados em tabelas interligadas por relações. Eles seguem o modelo relacional, onde os dados são armazenados em linhas e colunas. Cada linha em uma tabela representa um registro único, e cada coluna representa um atributo do dado.</p>
+                <p>Exemplos comuns de bancos de dados relacionais incluem MySQL, PostgreSQL, Oracle e SQL Server. Esses bancos são amplamente utilizados em aplicações onde a consistência e a integridade dos dados são cruciais, como sistemas bancários e aplicativos de e-commerce.</p>
+                
+                <h3>Vantagens</h3>
+                <ul>
+                    <li><strong>ACID:</strong> Garantia de transações seguras (Atomicidade, Consistência, Isolamento e Durabilidade).</li>
+                    <li><strong>SQL:</strong> Uso de uma linguagem padrão e poderosa para consultas.</li>
+                    <li><strong>Integridade:</strong> Forte consistência dos dados através de chaves primárias e estrangeiras.</li>
+                </ul>
+
+                <h3>Desvantagens</h3>
+                <ul>
+                    <li><strong>Escalabilidade:</strong> Dificuldade em escalar horizontalmente (distribuir em vários servidores).</li>
+                    <li><strong>Flexibilidade:</strong> Estrutura rígida de esquemas que pode limitar a flexibilidade.</li>
+                </ul>
+
+                <h3>Exemplo de Banco de Dados Relacional - MySQL</h3>
+                <p>Um exemplo simples de tabela relacional para um sistema de gerenciamento de alunos:</p>
+
+                <pre>
+CREATE TABLE Professores (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100),
+    email VARCHAR(100)
+);
+
+CREATE TABLE Turmas (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100),
+    semestre INT,
+    ano INT,
+    professor_id INT,
+    FOREIGN KEY (professor_id) REFERENCES Professores(id)
+);
+
+CREATE TABLE Alunos (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100),
+    matricula VARCHAR(20)
+);
+
+CREATE TABLE Atividades (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    turma_id INT,
+    valor DECIMAL(5, 2),
+    data DATE,
+    FOREIGN KEY (turma_id) REFERENCES Turmas(id)
+);
+                </pre>
+
+                <p>Essas tabelas representam uma estrutura relacional onde as turmas estão ligadas aos professores e atividades estão associadas às turmas.</p>
+            </section>
+
+            <section id="nao-relacionais">
+                <h2>Bancos de Dados Não Relacionais</h2>
+                <img src="images/naosqlok.png" alt="Banco de Dados Não Relacional" class="section-img">
+                <p>Bancos de dados não relacionais, ou NoSQL, oferecem uma abordagem mais flexível para o armazenamento de dados. Eles não seguem o modelo relacional, permitindo o uso de estruturas de dados como documentos, chave-valor, colunas e grafos.</p>
+                <p>Exemplos populares incluem MongoDB, Redis, Cassandra e Neo4j. Esses bancos de dados são usados em aplicações onde a escalabilidade, a flexibilidade e a performance são prioritárias, como em sistemas de big data, redes sociais e aplicações de IoT.</p>
+                
+                <h3>Vantagens</h3>
+                <ul>
+                    <li><strong>Escalabilidade:</strong> Facilidade em escalar horizontalmente.</li>
+                    <li><strong>Flexibilidade:</strong> Estruturas de dados dinâmicas e sem esquema definido.</li>
+                    <li><strong>Performance:</strong> Otimização para leituras e escritas rápidas em grandes volumes de dados.</li>
+                </ul>
+
+                <h3>Desvantagens</h3>
+                <ul>
+                    <li><strong>Consistência:</strong> Pode haver concessões em consistência (eventual consistency).</li>
+                    <li><strong>Complexidade:</strong> Pode ser mais complexo gerenciar dados em estruturas não relacionais.</li>
+                </ul>
+
+                <h3>Exemplo de Banco de Dados Não Relacional - MongoDB</h3>
+                <p>Um exemplo de documento em um banco de dados NoSQL, MongoDB, para um sistema de gerenciamento de alunos:</p>
+
+                <pre>
+{
+    "_id": ObjectId("507f1f77bcf86cd799439011"),
+    "nome": "João Silva",
+    "matricula": "2024001",
+    "turmas": [
+        {
+            "nome": "Matemática Avançada",
+            "semestre": 2,
+            "ano": 2024,
+            "professor": "Dra. Maria Almeida"
+        },
+        {
+            "nome": "Física Experimental",
+            "semestre": 2,
+            "ano": 2024,
+            "professor": "Prof. Carlos Eduardo"
+        }
+    ],
+    "atividades": [
+        {
+            "turma": "Matemática Avançada",
+            "valor": 25,
+            "data": "2024-08-21"
+        },
+        {
+            "turma": "Física Experimental",
+            "valor": 15,
+            "data": "2024-08-22"
+        }
+    ]
+}
+                </pre>
+
+                <p>Esse documento representa um aluno e suas turmas e atividades associadas em uma estrutura mais flexível do que um banco de dados relacional.</p>
+            </section>
+
+            <section id="comparacao">
+                <h2>Comparação Técnica</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Critério</th>
+                            <th>Relacional</th>
+                            <th>Não Relacional</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Modelo de Dados</td>
+                            <td>Baseado em tabelas</td>
+                            <td>Documentos, chave-valor, colunas, grafos</td>
+                        </tr>
+                        <tr>
+                            <td>Escalabilidade</td>
+                            <td>Vertical (mais hardware)</td>
+                            <td>Horizontal (mais servidores)</td>
+                        </tr>
+                        <tr>
+                            <td>Consistência</td>
+                            <td>Forte (ACID)</td>
+                            <td>Eventual, dependendo do tipo</td>
+                        </tr>
+                        <tr>
+                            <td>Flexibilidade</td>
+                            <td>Baixa (esquema fixo)</td>
+                            <td>Alta (esquema flexível)</td>
+                        </tr>
+                        <tr>
+                            <td>Usos Comuns</td>
+                            <td>Sistemas financeiros, ERP</td>
+                            <td>Big data, IoT, redes sociais</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="conclusao">
+                <h2>Conclusão</h2>
+                <p>A escolha entre um banco de dados relacional e não relacional depende das necessidades específicas da aplicação.
+				Bancos de dados relacionais são ideais para aplicações que exigem consistência e integridade dos dados, enquanto bancos
+				de dados não relacionais são mais adequados para cenários que requerem escalabilidade e flexibilidade. Avaliar as características
+                de cada tipo e as demandas do projeto é essencial para tomar a decisão correta.</p>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 - Jose Eustaquio/ Alejandro Leles</p>
+    </footer>
+</body>
+</html>
